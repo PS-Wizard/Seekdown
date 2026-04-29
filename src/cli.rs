@@ -145,7 +145,10 @@ fn run_benchmark(args: &[String]) -> Result<(), String> {
     )
     .map_err(|error| format!("benchmark failed: {error}"))?;
 
-    println!("queries={} repeat={} total={}", summary.queries, summary.repeat, summary.total_runs);
+    println!(
+        "documents={} queries={} repeat={} total={} build={:.4}ms",
+        summary.documents, summary.queries, summary.repeat, summary.total_runs, summary.build_ms
+    );
     println!(
         "mean={:.4}ms median={:.4}ms p95={:.4}ms qps={:.2}",
         summary.mean_ms, summary.median_ms, summary.p95_ms, summary.qps

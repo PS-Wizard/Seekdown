@@ -8,9 +8,11 @@ use crate::ranking::RankingModel;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct BenchmarkSummary {
+    pub documents: usize,
     pub queries: usize,
     pub repeat: usize,
     pub total_runs: usize,
+    pub build_ms: f64,
     pub mean_ms: f64,
     pub median_ms: f64,
     pub p95_ms: f64,
@@ -26,7 +28,10 @@ pub fn benchmark_queries(
     chunk_size: usize,
     repeat: usize,
 ) -> io::Result<BenchmarkSummary> {
+    let build_start = Instant::now();
     let index = build_search_index(dataset_dir, mode, chunk_size)?;
+    let build_ms = build_start.elapsed().as_secs_f64() * 1000.0;
+    let documents = index.documents.len();
     let queries = read_queries(queries_path)?;
     let safe_repeat = repeat.max(1);
     let mut timings_ms = Vec::with_capacity(queries.len() * safe_repeat);
@@ -52,9 +57,11 @@ pub fn benchmark_queries(
     };
 
     Ok(BenchmarkSummary {
+        documents,
         queries: queries.len(),
         repeat: safe_repeat,
         total_runs,
+        build_ms,
         mean_ms,
         median_ms,
         p95_ms,

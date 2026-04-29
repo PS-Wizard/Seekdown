@@ -1,0 +1,2 @@
+documents=122359 queries=60 repeat=20 total=1200 build=1649.8807ms
+mean=15.3309ms median=16.6750ms p95=20.3245ms qps=65.23

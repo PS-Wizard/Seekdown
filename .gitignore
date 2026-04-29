@@ -1,3 +1,4 @@
 target/
 dataset/
 tools/trec_eval/
+experiments/corpora/

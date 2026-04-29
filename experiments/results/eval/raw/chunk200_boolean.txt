@@ -1,0 +1,5 @@
+map                   	all	0.1274
+recip_rank            	all	0.8451
+P_10                  	all	0.7283
+recall_10             	all	0.1475
+ndcg_cut_10           	all	0.6488
