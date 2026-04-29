@@ -1,0 +1,31 @@
+source_id,source_url,license,notes,markdown_files
+book,https://github.com/rust-lang/book,MIT OR Apache-2.0,curated markdown docs/readmes/examples,117
+rust-by-example,https://github.com/rust-lang/rust-by-example,MIT OR Apache-2.0,curated markdown docs/readmes/examples,199
+cargo,https://github.com/rust-lang/cargo,MIT OR Apache-2.0,curated markdown docs/readmes/examples,213
+rustfmt,https://github.com/rust-lang/rustfmt,MIT OR Apache-2.0,curated markdown docs/readmes/examples,1
+rust-clippy,https://github.com/rust-lang/rust-clippy,MIT OR Apache-2.0,curated markdown docs/readmes/examples,42
+rustc-dev-guide,https://github.com/rust-lang/rustc-dev-guide,MIT OR Apache-2.0,curated markdown docs/readmes/examples,234
+reference,https://github.com/rust-lang/reference,MIT OR Apache-2.0,curated markdown docs/readmes/examples,130
+nomicon,https://github.com/rust-lang/nomicon,MIT OR Apache-2.0,curated markdown docs/readmes/examples,65
+mdBook,https://github.com/rust-lang/mdBook,see repo LICENSE,curated markdown docs/readmes/examples,47
+rustlings,https://github.com/rust-lang/rustlings,see repo LICENSE,curated markdown docs/readmes/examples,28
+tokio,https://github.com/tokio-rs/tokio,see repo LICENSE,curated markdown docs/readmes/examples,16
+axum,https://github.com/tokio-rs/axum,see repo LICENSE,curated markdown docs/readmes/examples,9
+json,https://github.com/serde-rs/json,MIT OR Apache-2.0,curated markdown docs/readmes/examples,1
+rayon,https://github.com/rayon-rs/rayon,MIT OR Apache-2.0,curated markdown docs/readmes/examples,7
+ripgrep,https://github.com/BurntSushi/ripgrep,unknown,curated markdown docs/readmes/examples,15
+fd,https://github.com/sharkdp/fd,MIT OR Apache-2.0,curated markdown docs/readmes/examples,1
+bat,https://github.com/sharkdp/bat,MIT OR Apache-2.0,curated markdown docs/readmes/examples,2
+clap,https://github.com/clap-rs/clap,MIT OR Apache-2.0,curated markdown docs/readmes/examples,61
+serde,https://github.com/serde-rs/serde,MIT OR Apache-2.0,curated markdown docs/readmes/examples,2
+fishtest,local:~/fishtest,unknown,local markdown docs and readme,11
+kubernetes-website,https://github.com/kubernetes/website,see repo LICENSE,curated english docs subtree content/en/docs,1610
+docker-docs,https://github.com/docker/docs,see repo LICENSE,curated manuals subtree content/manuals,746
+github-docs,https://github.com/github/docs,see repo LICENSE,curated docs content subtree,3612
+vscode-docs,https://github.com/microsoft/vscode-docs,see repo LICENSE,curated docs api and release-notes subtrees,545
+wezterm,https://github.com/wez/wezterm,see repo LICENSE,curated docs subtree,634
+niri,https://github.com/YaLTeR/niri,see repo LICENSE,curated markdown docs and readmes,52
+sway,https://github.com/swaywm/sway,see repo LICENSE,curated markdown docs and readmes,32
+hyprland-wiki,https://github.com/hyprwm/hyprland-wiki,see repo LICENSE,curated markdown wiki docs,97
+hugoDocs,https://github.com/gohugoio/hugoDocs,see repo LICENSE,curated markdown docs,1023
+nushell.github.io,https://github.com/nushell/nushell.github.io,see repo LICENSE,curated markdown docs and blog content,1543

@@ -1,0 +1,61 @@
+query_id,query_text
+q001,axum routing handlers
+q002,axum middleware state management
+q003,bat syntax highlighting themes
+q004,bat line numbers and paging
+q005,book markdown chapters and summary
+q006,book publishing and output formats
+q007,cargo dependencies features and workspace configuration
+q008,cargo build release and test commands
+q009,clap derive subcommands and argument parsing
+q010,clap default values and validators
+q011,docker compose networking and volumes
+q012,docker container build images and ports
+q013,fd search hidden files and ignore patterns
+q014,fd files and directories filtering examples
+q015,fishtest worker setup and task scheduling
+q016,fishtest distributed testing queue
+q017,github pull request review workflow
+q018,github actions workflow automation
+q019,hugo content sections taxonomies and shortcodes
+q020,hugo site configuration and deployment
+q021,hyprland keybindings monitors and workspace layout
+q022,hyprland configuration and window rules
+q023,json parsing objects arrays and nested values
+q024,json serialization and deserialization with serde
+q025,kubernetes deployments services and pods
+q026,kubernetes configmaps ingress and scaling
+q027,mdbook summary chapters and book structure
+q028,mdbook build serve and deploy documentation
+q029,niri compositor configuration and workspaces
+q030,niri keyboard shortcuts and monitor setup
+q031,nomicon unsafe pointers and raw memory
+q032,nomicon send and sync traits
+q033,nushell pipelines records and tables
+q034,nushell configuration and custom commands
+q035,rayon parallel iterators and thread pool
+q036,rayon scoped threads and parallel map
+q037,rust reference type coercions and lifetimes
+q038,rust reference macros and attributes
+q039,ripgrep regex search examples and patterns
+q040,ripgrep hidden files ignore and configuration
+q041,rust by example ownership and borrowing
+q042,rust by example lifetimes and traits
+q043,rustc dev guide compiler architecture overview
+q044,rustc dev guide borrow checker and type checking
+q045,rust clippy lint explanations and allow deny settings
+q046,rust clippy pedantic lints and warnings
+q047,rustfmt configuration options and formatting style
+q048,rustfmt edition and import layout settings
+q049,rustlings install usage and running exercises
+q050,rustlings progress and exercise solutions
+q051,serde json parse string and nested structs
+q052,serde serialize and deserialize data structures
+q053,sway window manager configuration and keybindings
+q054,sway workspaces floating windows and outputs
+q055,tokio spawn async tasks and channels
+q056,tokio runtime file io and concurrency
+q057,vscode settings extensions and debugging
+q058,vscode workspace tasks and terminal integration
+q059,wezterm panes tabs and split configuration
+q060,wezterm appearance fonts and keybindings
