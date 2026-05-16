@@ -1,4 +1,7 @@
 target/
 dataset/
-tools/trec_eval/
 experiments/corpora/
+tools/trec_eval/
+tools/trec_eval-bin
+out.png
+charged-ieee/out.png

@@ -1,0 +1,4 @@
+query_id,query_text
+q001,install cargo
+q002,query latency
+q003,benchmark qps

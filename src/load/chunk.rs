@@ -34,22 +34,30 @@ impl DocumentLoader for ChunkLoader {
     }
 }
 
+// Turn one markdown file into many synthetic retrieval documents.
+//
+// Chunk mode deliberately ignores authored markdown structure and instead treats
+// the file as a flat token stream split into fixed-size windows.
 fn split_into_chunks(path: &str, content: &str, chunk_size: usize) -> Vec<LoadedDocument> {
     let tokens = tokenize(content);
     if tokens.is_empty() {
         return Vec::new();
     }
 
+    // Defensive clamp so `--chunk-size 0` does not break chunking.
     let safe_chunk_size = chunk_size.max(1);
     let mut documents = Vec::new();
 
     for (index, chunk) in tokens.chunks(safe_chunk_size).enumerate() {
+        // Rebuild the chunk body as normalized token text.
         let body = chunk.join(" ");
         documents.push(LoadedDocument {
+            // Stable chunk ids are important because runs / pools / qrels refer to them later.
             key: format!("{path}#chunk-{index:04}"),
             path: path.to_string(),
             title: format!("chunk {index}"),
             body,
+            // Chunk mode does not preserve original line locations.
             start_line: 0,
             end_line: 0,
         });

@@ -1,6 +1,8 @@
 use crate::index::types::{Index, TermId};
 use crate::ranking::{deduplicate_query_term_ids, ScoredDocument};
 
+// BM25+ keeps the BM25 shape but adds a lower-bounding delta so long
+// relevant documents are not suppressed as aggressively.
 const K1: f32 = 1.2;
 const B: f32 = 0.75;
 const DELTA: f32 = 1.0;

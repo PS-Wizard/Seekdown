@@ -1,0 +1,21 @@
+system_id,mode,model,chunk_size,map,mrr,p10,ndcg10,recall10,family,build_ms,median_ms,p95_ms,qps,display_label,short_label
+section_boolean,section,boolean,,0.0926,0.7154,0.6,0.3707,0.117,section,1086.9235,5.41,8.3166,187.31,section · boolean,sec-bool
+section_tfidf,section,tfidf,,0.1043,0.8302,0.6417,0.3883,0.1314,section,1105.2027,4.9163,7.1869,207.94,section · tf-idf,sec-tfidf
+section_bm25,section,bm25,,0.1593,0.9583,0.7717,0.5405,0.1725,section,1102.4446,3.9573,6.0197,254.78,section · bm25,sec-bm25
+section_bm25plus,section,bm25plus,,0.1554,0.975,0.7583,0.5185,0.1695,section,1092.059,3.0826,5.3055,314.14,section · bm25+,sec-bm25+
+section_pivoted,section,pivoted,,0.1476,0.9283,0.7583,0.5177,0.1629,section,1058.0618,3.8842,6.1978,257.02,section · pivoted,sec-pivot
+chunk80_boolean,chunk,boolean,80.0,0.1395,0.8647,0.7533,0.6476,0.1616,chunk80,1512.8676,18.327,28.0627,54.85,chunk 80 · boolean,c80-bool
+chunk80_tfidf,chunk,tfidf,80.0,0.1564,0.9181,0.815,0.7208,0.1728,chunk80,1478.5344,15.0389,16.8435,73.17,chunk 80 · tf-idf,c80-tfidf
+chunk80_bm25,chunk,bm25,80.0,0.1688,0.9597,0.8333,0.7617,0.1833,chunk80,1426.1619,12.5123,17.7046,82.75,chunk 80 · bm25,c80-bm25
+chunk80_bm25plus,chunk,bm25plus,80.0,0.1738,0.9431,0.84,0.7692,0.1911,chunk80,1432.1894,12.1297,15.6661,86.82,chunk 80 · bm25+,c80-bm25+
+chunk80_pivoted,chunk,pivoted,80.0,0.1619,0.9417,0.825,0.7357,0.1758,chunk80,1649.8807,16.675,20.3245,65.23,chunk 80 · pivoted,c80-pivot
+chunk120_boolean,chunk,boolean,120.0,0.1372,0.8637,0.7667,0.6656,0.1633,chunk120,1452.0673,9.7809,16.0809,99.8,chunk 120 · boolean,c120-bool
+chunk120_tfidf,chunk,tfidf,120.0,0.1544,0.9103,0.8083,0.7285,0.1691,chunk120,1401.5359,8.3829,11.636,124.95,chunk 120 · tf-idf,c120-tfidf
+chunk120_bm25,chunk,bm25,120.0,0.1681,0.9569,0.8333,0.771,0.1815,chunk120,1404.6834,7.9112,12.458,127.81,chunk 120 · bm25,c120-bm25
+chunk120_bm25plus,chunk,bm25plus,120.0,0.1718,0.95,0.835,0.782,0.1878,chunk120,1406.3375,7.9261,12.4187,127.55,chunk 120 · bm25+,c120-bm25+
+chunk120_pivoted,chunk,pivoted,120.0,0.1591,0.9458,0.8233,0.7442,0.1746,chunk120,1394.7606,8.1559,11.7789,126.95,chunk 120 · pivoted,c120-pivot
+chunk200_boolean,chunk,boolean,200.0,0.1274,0.8451,0.7283,0.6488,0.1475,chunk200,1377.8311,5.243,8.6676,191.24,chunk 200 · boolean,c200-bool
+chunk200_tfidf,chunk,tfidf,200.0,0.1547,0.9227,0.8167,0.7388,0.1752,chunk200,1380.8202,4.28,7.1255,235.7,chunk 200 · tf-idf,c200-tfidf
+chunk200_bm25,chunk,bm25,200.0,0.168,0.9519,0.835,0.771,0.1851,chunk200,1376.7848,4.2442,6.7922,237.39,chunk 200 · bm25,c200-bm25
+chunk200_bm25plus,chunk,bm25plus,200.0,0.1656,0.9489,0.8283,0.7695,0.1826,chunk200,1369.6392,4.0217,6.5645,252.57,chunk 200 · bm25+,c200-bm25+
+chunk200_pivoted,chunk,pivoted,200.0,0.1585,0.9435,0.8217,0.7524,0.178,chunk200,1372.3808,4.3712,7.0373,232.98,chunk 200 · pivoted,c200-pivot

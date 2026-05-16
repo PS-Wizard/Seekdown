@@ -1,6 +1,7 @@
 use crate::index::types::{Index, TermId};
 use crate::ranking::{deduplicate_query_term_ids, ScoredDocument};
 
+// Classical TF-IDF scoring with log-scaled term frequency.
 pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
     let query_term_ids = deduplicate_query_term_ids(query_term_ids);
     let mut scores = vec![0.0_f32; index.document_count()];
@@ -22,6 +23,7 @@ pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
                 seen.push(doc_id);
             }
 
+            // Repeated terms help, but with diminishing returns.
             let tf = 1.0 + (term_freq as f32).ln();
             *entry += tf * idf;
         }

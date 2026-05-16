@@ -2,15 +2,18 @@ use std::collections::HashMap;
 
 use crate::load::LoadedDocument;
 
+// Internal integer ids keep the hot path compact and cheap to compare.
 pub type DocId = u32;
 pub type TermId = u32;
 
+// For one term, store the documents that contain it and the term frequency inside each document.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PostingList {
     pub doc_ids: Vec<DocId>,
     pub term_freqs: Vec<u32>,
 }
 
+// User-facing metadata for a retrievable unit.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DocumentMeta {
     pub key: String,
@@ -21,12 +24,14 @@ pub struct DocumentMeta {
     pub body: String,
 }
 
+// Bidirectional term storage: `terms[term_id]` and `term -> term_id`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Lexicon {
     pub terms: Vec<String>,
     pub term_to_id: HashMap<String, TermId>,
 }
 
+// Precomputed corpus-wide values used by ranking models.
 #[derive(Debug, Clone, PartialEq)]
 pub struct CorpusStats {
     pub document_count: u32,
@@ -35,6 +40,7 @@ pub struct CorpusStats {
     pub document_frequencies: Vec<u32>,
 }
 
+// The complete in-memory inverted index used by every retrieval model.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Index {
     pub documents: Vec<DocumentMeta>,

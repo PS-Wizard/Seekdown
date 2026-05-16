@@ -25,6 +25,10 @@ pub struct PoolRow {
     pub sources: Vec<String>,
 }
 
+// Build one pooled candidate CSV from many systems.
+//
+// The pool deduplicates by `(query_id, doc_id)`, because relevance is judged per
+// query-document pair, not per model score.
 pub fn generate_pool(
     dataset_dir: &Path,
     queries_path: &Path,
@@ -38,6 +42,9 @@ pub fn generate_pool(
     let mut pool: BTreeMap<(String, String), PoolRow> = BTreeMap::new();
 
     for spec in specs {
+        // Pooling may request many systems, but there are only two actual loader
+        // modes. Reuse the built index for each mode instead of rebuilding it for
+        // every ranking model.
         let mode_key = match spec.mode {
             LoadMode::Section => "section",
             LoadMode::Chunk => "chunk",
@@ -62,6 +69,7 @@ pub fn generate_pool(
     Ok(rows.len())
 }
 
+// Merge one system's top-k results into the shared candidate pool.
 fn append_results(
     pool: &mut BTreeMap<(String, String), PoolRow>,
     query_id: &str,
@@ -82,6 +90,8 @@ fn append_results(
             sources: Vec::new(),
         });
 
+        // Keep the maximum score seen across contributing systems purely as a
+        // representative value for the pooled CSV. It is not used for evaluation.
         if result.score > entry.score {
             entry.score = result.score;
         }
@@ -93,6 +103,8 @@ fn append_results(
     }
 }
 
+// Write the human-facing annotation sheet. The trailing `relevance` column is
+// intentionally left blank for manual judgment.
 pub fn write_pool_csv(path: &Path, rows: &[PoolRow]) -> io::Result<()> {
     let mut output = String::from(
         "query_id,query_text,doc_id,path,title,score,snippet,sources,relevance\n",
@@ -121,6 +133,8 @@ pub fn write_pool_csv(path: &Path, rows: &[PoolRow]) -> io::Result<()> {
     fs::write(path, output)
 }
 
+// Expand comma-separated CLI lists like `section,chunk` and `bm25,tfidf`
+// into the concrete system matrix to run.
 pub fn parse_specs(modes: &str, models: &str) -> Result<Vec<PoolSpec>, String> {
     let mut parsed_modes = Vec::new();
     for mode in split_list(modes) {

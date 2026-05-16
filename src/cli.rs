@@ -9,6 +9,9 @@ use crate::output::print_results;
 use crate::query::{search_dataset, LoadMode, SearchOptions};
 use crate::ranking::RankingModel;
 
+// Top-level CLI entrypoint.
+//
+// This binary hand-parses `std::env::args()` instead of using clap.
 pub fn run() {
     let args: Vec<String> = env::args().collect();
     match try_run(&args) {
@@ -21,6 +24,7 @@ pub fn run() {
     }
 }
 
+// Dispatch the first positional argument to one of the five subcommands.
 fn try_run(args: &[String]) -> Result<(), String> {
     let Some(command) = args.get(1).map(String::as_str) else {
         return Err(String::from("missing command"));
@@ -36,6 +40,7 @@ fn try_run(args: &[String]) -> Result<(), String> {
     }
 }
 
+// One-off interactive search: build an index, run a single query, print results.
 fn run_search(args: &[String]) -> Result<(), String> {
     if args.len() < 4 {
         return Err(String::from("missing command or arguments"));
@@ -59,6 +64,7 @@ fn run_search(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+// Batch retrieval: run one system over the full query set and write a TREC run file.
 fn run_batch(args: &[String]) -> Result<(), String> {
     if args.len() < 5 {
         return Err(String::from("missing dataset, queries, or output path"));
@@ -108,6 +114,7 @@ fn run_batch(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+// Performance evaluation: measure build time and repeated query latency.
 fn run_benchmark(args: &[String]) -> Result<(), String> {
     if args.len() < 4 {
         return Err(String::from("missing dataset or queries path"));
@@ -156,6 +163,7 @@ fn run_benchmark(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+// Candidate generation for manual judging: merge top-k outputs from many systems.
 fn run_pool(args: &[String]) -> Result<(), String> {
     if args.len() < 4 {
         return Err(String::from("missing dataset or queries path"));
@@ -211,6 +219,7 @@ fn run_pool(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+// Convert the labeled pool into qrels for `trec_eval`.
 fn run_qrels(args: &[String]) -> Result<(), String> {
     if args.len() < 3 {
         return Err(String::from("missing annotated pool path"));
@@ -248,6 +257,7 @@ struct CommonSearchFlags {
     chunk_size: usize,
 }
 
+// Shared flag parser used by search / run / bench.
 fn parse_common_search_flags(args: &[String]) -> Result<CommonSearchFlags, String> {
     let mut mode = LoadMode::Section;
     let mut ranking_model = RankingModel::Boolean;

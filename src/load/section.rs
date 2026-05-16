@@ -30,6 +30,10 @@ impl DocumentLoader for SectionLoader {
     }
 }
 
+// Split one markdown file into retrieval units based on heading boundaries.
+//
+// The current heading stack becomes the section title, so nested headings yield
+// titles like `Intro > Install > Linux`.
 fn parse_sections(path: &str, content: &str) -> Vec<LoadedDocument> {
     let lines: Vec<&str> = content.lines().collect();
     let mut sections = Vec::new();
@@ -42,6 +46,7 @@ fn parse_sections(path: &str, content: &str) -> Vec<LoadedDocument> {
 
     for (index, line) in lines.iter().enumerate() {
         if let Some((level, heading)) = parse_heading(line) {
+            // A new heading closes the previous section and starts a new one.
             push_section(
                 &mut sections,
                 path,
@@ -52,6 +57,7 @@ fn parse_sections(path: &str, content: &str) -> Vec<LoadedDocument> {
                 &current_body,
             );
 
+            // Trim the heading stack back to the parent level, then append the new heading.
             while stack.len() >= level {
                 stack.pop();
             }
@@ -92,6 +98,7 @@ fn parse_sections(path: &str, content: &str) -> Vec<LoadedDocument> {
     sections
 }
 
+// Emit a section only if it contains non-whitespace body text.
 fn push_section(
     sections: &mut Vec<LoadedDocument>,
     path: &str,
@@ -116,6 +123,7 @@ fn push_section(
     });
 }
 
+// Parse markdown headings of the form `# ...` through `###### ...`.
 fn parse_heading(line: &str) -> Option<(usize, &str)> {
     let trimmed = line.trim();
     let hashes = trimmed.bytes().take_while(|byte| *byte == b'#').count();
@@ -131,6 +139,7 @@ fn parse_heading(line: &str) -> Option<(usize, &str)> {
     Some((hashes, heading))
 }
 
+// Build a stable section key suffix from the heading stack.
 fn slug_path(parts: &[String]) -> String {
     let mut slugged = Vec::with_capacity(parts.len());
     for part in parts {
@@ -139,6 +148,7 @@ fn slug_path(parts: &[String]) -> String {
     slugged.join("/")
 }
 
+// Normalize heading text into a lowercase, dash-separated slug.
 fn slugify(input: &str) -> String {
     let mut slug = String::with_capacity(input.len());
     let mut last_dash = false;
@@ -164,7 +174,12 @@ mod tests {
     fn parse_sections_should_preserve_header_hierarchy() {
         let docs = parse_sections(
             "docs/test.md",
-            "# Intro\nhello\n## Install\nuse cargo\n### Linux\nworks\n",
+            "# Intro
+            hello
+            ## Install
+            use cargo
+            ### Linux
+            works",
         );
 
         assert_eq!(docs[0].title, "Intro");

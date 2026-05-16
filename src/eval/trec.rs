@@ -24,6 +24,7 @@ pub struct QrelRow {
     pub relevance: u32,
 }
 
+// Read the benchmark query set from a tiny two-column CSV.
 pub fn read_queries(path: &Path) -> io::Result<Vec<QueryInput>> {
     let content = fs::read_to_string(path)?;
     let mut queries = Vec::new();
@@ -54,6 +55,7 @@ pub fn read_queries(path: &Path) -> io::Result<Vec<QueryInput>> {
     Ok(queries)
 }
 
+// Write standard TREC run lines: `query_id Q0 doc_id rank score run_name`.
 pub fn write_run_file(path: &Path, rows: &[RunRow]) -> io::Result<()> {
     let mut output = String::new();
     for row in rows {
@@ -65,6 +67,10 @@ pub fn write_run_file(path: &Path, rows: &[RunRow]) -> io::Result<()> {
     fs::write(path, output)
 }
 
+// Convert the annotated pool CSV into qrels.
+//
+// Human-facing fields like query text, title, snippet, and source systems are
+// dropped here because `trec_eval` only needs `(query_id, doc_id, relevance)`.
 pub fn convert_pool_to_qrels(pool_path: &Path, out_path: &Path) -> io::Result<usize> {
     let content = fs::read_to_string(pool_path)?;
     let mut rows = Vec::new();
@@ -118,6 +124,7 @@ pub fn write_qrels(path: &Path, rows: &[QrelRow]) -> io::Result<()> {
     fs::write(path, output)
 }
 
+// Tiny CSV parser that handles quotes well enough for the pooled annotation file.
 fn parse_csv_line(line: &str) -> Vec<String> {
     let mut fields = Vec::new();
     let mut current = String::new();

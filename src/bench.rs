@@ -19,6 +19,8 @@ pub struct BenchmarkSummary {
     pub qps: f64,
 }
 
+// Benchmark one system configuration by building the index once and timing many
+// repeated query executions over the fixed query set.
 pub fn benchmark_queries(
     dataset_dir: &Path,
     queries_path: &Path,
@@ -29,6 +31,7 @@ pub fn benchmark_queries(
     repeat: usize,
 ) -> io::Result<BenchmarkSummary> {
     let build_start = Instant::now();
+    // Index build time is measured separately from query latency.
     let index = build_search_index(dataset_dir, mode, chunk_size)?;
     let build_ms = build_start.elapsed().as_secs_f64() * 1000.0;
     let documents = index.documents.len();
@@ -37,6 +40,7 @@ pub fn benchmark_queries(
     let mut timings_ms = Vec::with_capacity(queries.len() * safe_repeat);
 
     for _ in 0..safe_repeat {
+        // Repeating the same query set many times stabilizes the timing summary.
         for query in &queries {
             let start = Instant::now();
             let _results = search_index(&index, &query.query_text, ranking_model, top_k);
@@ -69,6 +73,7 @@ pub fn benchmark_queries(
     })
 }
 
+// Simple nearest-rank percentile over already-sorted timings.
 fn percentile(values: &[f64], p: f64) -> f64 {
     if values.is_empty() {
         return 0.0;

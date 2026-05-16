@@ -1,6 +1,9 @@
 use crate::index::types::{Index, TermId};
 use crate::ranking::{deduplicate_query_term_ids, ScoredDocument};
 
+// Boolean baseline used here as term-overlap scoring.
+//
+// A document gains one point for each distinct query term it contains.
 pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
     let query_term_ids = deduplicate_query_term_ids(query_term_ids);
     let mut scores = vec![0_u32; index.document_count()];
@@ -25,6 +28,7 @@ pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
         });
     }
 
+    // Tie-breaks are stable across all models: shorter doc first, then key.
     results.sort_by(|left, right| {
         right
             .score

@@ -1,9 +1,12 @@
 use crate::index::types::{Index, TermId};
 use crate::ranking::{deduplicate_query_term_ids, ScoredDocument};
 
+// Standard BM25 parameters.
 const K1: f32 = 1.2;
 const B: f32 = 0.75;
 
+// BM25 combines inverse document frequency, term-frequency saturation,
+// and document-length normalization.
 pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
     let query_term_ids = deduplicate_query_term_ids(query_term_ids);
     let mut scores = vec![0.0_f32; index.document_count()];
@@ -27,6 +30,7 @@ pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
             }
 
             let tf = term_freq as f32;
+            // Longer-than-average documents are penalized through `norm`.
             let dl = index.doc_lengths[doc_id as usize] as f32;
             let norm = if avgdl == 0.0 {
                 1.0

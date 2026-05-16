@@ -1,3 +1,7 @@
+// Lowercase lexical tokenizer.
+//
+// Any non-ASCII-alphanumeric character acts as a boundary, so `rust-cli`
+// becomes `rust`, `cli` and `BM25+` becomes `bm25`.
 pub fn tokenize(text: &str) -> Vec<String> {
     let mut tokens = Vec::new();
     let mut current = String::new();

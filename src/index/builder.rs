@@ -4,11 +4,16 @@ use crate::index::types::{CorpusStats, DocumentMeta, Index, Lexicon, PostingList
 use crate::load::LoadedDocument;
 use crate::tokenize::tokenize;
 
+// Build a plain in-memory inverted index from already-segmented documents.
+//
+// The output is shared by every ranking model. The builder does not care whether
+// the retrieval unit came from section mode or chunk mode.
 pub fn build_index(documents: Vec<LoadedDocument>) -> Index {
     let mut stored_documents = Vec::with_capacity(documents.len());
     let mut doc_lengths = Vec::with_capacity(documents.len());
     let mut term_to_id: HashMap<String, TermId> = HashMap::new();
     let mut terms = Vec::new();
+    // Temporary accumulator: for each term, store `(doc_id, term_freq)` pairs.
     let mut postings_acc: Vec<Vec<(u32, u32)>> = Vec::new();
     let mut document_frequencies = Vec::new();
     let mut total_terms = 0_u64;
@@ -19,6 +24,7 @@ pub fn build_index(documents: Vec<LoadedDocument>) -> Index {
             continue;
         }
 
+        // Count terms inside this one document first so we can emit one posting per term.
         let mut local_freqs: HashMap<TermId, u32> = HashMap::new();
         for token in &tokens {
             let term_id = match term_to_id.get(token) {
@@ -48,6 +54,7 @@ pub fn build_index(documents: Vec<LoadedDocument>) -> Index {
         stored_documents.push(DocumentMeta::from(document));
     }
 
+    // Freeze the temporary posting pairs into the final parallel-vector layout.
     let postings = postings_acc
         .into_iter()
         .map(|posting_pairs| {

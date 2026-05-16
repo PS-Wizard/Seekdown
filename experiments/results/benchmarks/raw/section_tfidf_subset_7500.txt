@@ -1,2 +1,2 @@
-documents=56580 queries=60 repeat=20 total=1200 build=758.8202ms
-mean=2.9115ms median=2.8570ms p95=4.4676ms qps=343.47
+documents=56580 queries=60 repeat=20 total=1200 build=898.8317ms
+mean=2.5452ms median=2.7470ms p95=3.0423ms qps=392.89

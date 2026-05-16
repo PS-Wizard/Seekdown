@@ -1,8 +1,11 @@
 use crate::index::types::{Index, TermId};
 use crate::ranking::{deduplicate_query_term_ids, ScoredDocument};
 
+// Pivoted length normalization parameter.
 const SLOPE: f32 = 0.2;
 
+// Pivoted normalization is a TF-IDF-style scorer that corrects document-length
+// bias by pivoting around the corpus average length.
 pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
     let query_term_ids = deduplicate_query_term_ids(query_term_ids);
     let mut scores = vec![0.0_f32; index.document_count()];
@@ -32,6 +35,7 @@ pub fn search(index: &Index, query_term_ids: &[TermId]) -> Vec<ScoredDocument> {
             } else {
                 (1.0 - SLOPE) + SLOPE * (dl / avgdl)
             };
+            // Double-log weighting makes repeated terms help less aggressively.
             let weighted_tf = 1.0 + (1.0 + tf).ln().ln();
             *entry += (weighted_tf / norm) * idf;
         }

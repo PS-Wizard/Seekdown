@@ -5,6 +5,7 @@ use crate::eval::trec::{read_queries, write_run_file, QueryInput, RunRow};
 use crate::query::{build_search_index, search_index, LoadMode};
 use crate::ranking::RankingModel;
 
+// Generate one TREC run file for one system configuration over the full query set.
 pub fn generate_run_file(
     dataset_dir: &Path,
     queries_path: &Path,
@@ -15,6 +16,7 @@ pub fn generate_run_file(
     chunk_size: usize,
     run_name: &str,
 ) -> io::Result<usize> {
+    // Build the index once, then reuse it for every query in the set.
     let index = build_search_index(dataset_dir, mode, chunk_size)?;
     let queries = read_queries(queries_path)?;
     let mut rows = Vec::new();
@@ -27,6 +29,7 @@ pub fn generate_run_file(
     Ok(rows.len())
 }
 
+// Convert ranked search results into TREC run rows for one query.
 fn append_query_results(
     rows: &mut Vec<RunRow>,
     index: &crate::index::types::Index,
