@@ -7,11 +7,11 @@
   ],
   authors: (
     (
-      name: "Swoyam Pokharel",
+      name: "Swoyam Pokharel -- 2431342",
       department: [6CS030 Big Data],
-      organization: [University Of Wolverhampton],
+      organization: [University Of Wolverhampton -- Herald College Kathamandu],
       location: [Kathmandu, Nepal],
-      email: "me@pswoyam.com.np",
+      email: "np03cs4s240026@heraldcollege.edu.np",
     ),
   ),
   index-terms: (
